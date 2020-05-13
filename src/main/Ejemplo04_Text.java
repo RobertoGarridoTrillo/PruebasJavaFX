@@ -34,8 +34,7 @@ public class Ejemplo04_Text extends Application
     Text text = new Text();
     final String TYPE_TEXT = "Verdana";
 
-    setText(TYPE_TEXT, text);
-    System.out.println(text.getFont());
+    setFuente(TYPE_TEXT, text, 12);
 
     //Setting the text to be added. 
     text.setText("Hello World");
@@ -67,7 +66,7 @@ public class Ejemplo04_Text extends Application
    * @param searchedFont El tipo de texto buscado
    * @param text An objet of Text type
    */
-  private void setText(final String searchedFont, Text text)
+  private void setFuente(final String searchedFont, Text text, int size)
   {
     // Extracting the list of intaled fonts
     List<String> listFonts = Font.getFamilies();
@@ -77,11 +76,11 @@ public class Ejemplo04_Text extends Application
       if (searchedFont.equals(font))
       {
         text.setFont(Font.font(searchedFont,
-                FontWeight.BOLD, FontPosture.ITALIC, 70));
+                FontWeight.BOLD, FontPosture.ITALIC, size * 6.5));
         break;
       } else
       {
-        text.setFont(Font.font(12));
+        text.setFont(Font.font(size));
       }
     }
 

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo19_Subtraction extends Application
+public class Ejemplo20_Subtraction extends Application
 {
 
   @Override

@@ -12,13 +12,12 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo17_Union_Operation extends Application
+public class Ejemplo19_Intersection extends Application
 {
 
   @Override
-  public void start(Stage stage) throws Exception
+  public void start(Stage stage)
   {
-
     //Drawing Circle1 
     Circle circle1 = new Circle();
 
@@ -39,14 +38,14 @@ public class Ejemplo17_Union_Operation extends Application
     circle2.setCenterX(350.0f);
     circle2.setCenterY(135.0f);
 
-    //Setting the radius of the circle 
+    //Setting the radius of the circle  
     circle2.setRadius(100.0f);
 
-    //Setting the color of the circle  
+    //Setting the color of the circle 
     circle2.setFill(Color.BLUE);
 
-    //Performing union operation on the circle 
-    Shape shape = Shape.union(circle1, circle2);
+    //Performing intersection operation on the circle 
+    Shape shape = Shape.intersect(circle1, circle2);
 
     //Setting the fill color to the result 
     shape.setFill(Color.DARKSLATEBLUE);
@@ -58,9 +57,9 @@ public class Ejemplo17_Union_Operation extends Application
     Scene scene = new Scene(root, 600, 300);
 
     //Setting title to the Stage 
-    stage.setTitle("Union Example");
+    stage.setTitle("Intersection Example");
 
-    //Adding scene to the stage  
+    //Adding scene to the stage 
     stage.setScene(scene);
 
     //Displaying the contents of the stage 

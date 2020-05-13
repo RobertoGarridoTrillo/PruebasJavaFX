@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -16,14 +17,15 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo20_Stroke_Type extends Application
+public class Ejemplo21_setStroke extends Application
 {
 
   // Creating Circle´s Array
   Circle[] circleses = new Circle[4];
   String[] strings =
   {
-    "Without stroke", "      inside", "   centered", "     outside"
+    "setStroke(Color.RED)", "setStroke(Color.CYAN)", "setStroke(Color.YELLOW)",
+    "setStroke(Color.BROWN)"
   };
   Text[] texts = new Text[4];
 
@@ -32,15 +34,17 @@ public class Ejemplo20_Stroke_Type extends Application
   {
     setCircles();
 
+    setStrokes();
+
     //Creating a Group object  
     Group root = new Group(circleses[0], circleses[1],
             circleses[2], circleses[3], texts[0], texts[1],
-             texts[2], texts[3]);
+            texts[2], texts[3]);
 
     //Creating a scene object 
     Scene scene = new Scene(root, 850, 300);
     //Setting title to the Stage 
-    stage.setTitle("Stroke Type");
+    stage.setTitle("setStroke");
 
     //Adding scene to the stage 
     stage.setScene(scene);
@@ -50,8 +54,33 @@ public class Ejemplo20_Stroke_Type extends Application
   }
 
 
+  /**
+   * Setting the strokes
+   */
+  private void setStrokes()
+  {
+    circleses[0].setStroke(Color.RED);
+    circleses[0].setStrokeWidth(8);
+    circleses[0].setStrokeType(StrokeType.OUTSIDE);
+
+    circleses[1].setStroke(Color.CYAN);
+    circleses[1].setStrokeWidth(8);
+    circleses[1].setStrokeType(StrokeType.OUTSIDE);
+   
+    circleses[2].setStroke(Color.YELLOW);
+    circleses[2].setStrokeWidth(8);
+    circleses[2].setStrokeType(StrokeType.OUTSIDE);
+
+
+    circleses[3].setStroke(Color.BROWN);
+    circleses[3].setStrokeWidth(8);
+    circleses[3].setStrokeType(StrokeType.OUTSIDE);
+
+  }
+
+
   /* *
-   *   Drawing four Circle
+   *   Drawing four Circle with the texts
    */
   private void setCircles()
   {
@@ -66,10 +95,11 @@ public class Ejemplo20_Stroke_Type extends Application
       circleses[i].setCenterY(135.0f);
       circleses[i].setRadius(80.0f);
       circleses[i].setFill(Color.BLUE);
+              
       //Setting the properties of the text
       setFuente("Verdana", texts[i], 12);
-      texts[i].setX(j-50);
-      texts[i].setY(250);
+      texts[i].setX(j - 80);
+      texts[i].setY(260);
       texts[i].setFill(Color.RED);
       texts[i].setText(strings[i]);
       System.out.println(texts[i]);

@@ -3,41 +3,38 @@ package main;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.shape.Polyline;
+import javafx.scene.shape.QuadCurve;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo10_Polyline extends Application
+public class Ejemplo13_Quad_Curve extends Application
 {
 
   @Override
   public void start(Stage stage)
   {
-    //Creating a polyline 
-    Polyline polyline = new Polyline();
+    //Creating a QuadCurve 
+    QuadCurve quadCurve = new QuadCurve();
 
-    //Adding coordinates to the polygon 
-    polyline.getPoints().addAll(new Double[]
-    {
-      200.0, 50.0,
-      400.0, 50.0,
-      450.0, 150.0,
-      400.0, 250.0,
-      200.0, 250.0,
-      150.0, 150.0,
-    });
+    //Adding properties to the Quad Curve 
+    quadCurve.setStartX(100.0);
+    quadCurve.setStartY(220.0f);
+    quadCurve.setEndX(500.0f);
+    quadCurve.setEndY(220.0f);
+    quadCurve.setControlX(250.0f);
+    quadCurve.setControlY(000.0f);
 
     //Creating a Group object  
-    Group root = new Group(polyline);
+    Group root = new Group(quadCurve);
 
     //Creating a scene object 
     Scene scene = new Scene(root, 600, 300);
 
     //Setting title to the Stage 
-    stage.setTitle("Drawing a Polyline");
+    stage.setTitle("Drawing a Quad curve");
 
     //Adding scene to the stage 
     stage.setScene(scene);

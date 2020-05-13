@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo13_Arc extends Application
+public class Ejemplo14_Arc extends Application
 {
 
   @Override

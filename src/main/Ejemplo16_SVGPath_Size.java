@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo15_SVGPath_Size extends Application
+public class Ejemplo16_SVGPath_Size extends Application
 {
 
   private static final double REQUIRED_WIDTH = 50.0;

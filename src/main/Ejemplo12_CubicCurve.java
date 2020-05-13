@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo11_CubicCurve extends Application
+public class Ejemplo12_CubicCurve extends Application
 {
 
   @Override

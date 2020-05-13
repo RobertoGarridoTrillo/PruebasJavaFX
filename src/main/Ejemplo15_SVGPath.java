@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
  * @author Roberto Garrido Trillo
  */
-public class Ejemplo14_SVGPath extends Application
+public class Ejemplo15_SVGPath extends Application
 {
 
   @Override

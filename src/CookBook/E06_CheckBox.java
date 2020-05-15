@@ -1,0 +1,119 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CookBook;
+
+/**
+ *
+ * @author Roberto Garrido Trillo
+ */
+import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class E06_CheckBox extends Application
+{
+// Create the Selection Label
+  Label selectionMsg = new Label("Choose your Car");
+
+  public static void main(String[] args)
+  {
+    Application.launch(args);
+  }
+
+
+  @Override
+  public void start(Stage stage)
+  {
+// Create a CheckBox to support only two states
+    CheckBox fordCbx = new CheckBox("Ford");
+    
+// Create a CheckBox to support three states
+    CheckBox audiCbx = new CheckBox("Audi");
+    audiCbx.setAllowIndeterminate(true);
+    
+// Add a ChangeListener to the CheckBox fordCbx
+    fordCbx.selectedProperty().addListener(new ChangeListener<Boolean>()
+    {
+      public void changed(ObservableValue<? extends Boolean> ov,
+              final Boolean value, final Boolean newValue)
+      {
+        if (newValue != null && newValue) {
+          printMessage("Your Selection: Ford");
+        }
+      }
+
+
+    });
+    
+// Add a ChangeListener to the CheckBox audiCbx
+    audiCbx.selectedProperty().addListener(new ChangeListener<Boolean>()
+    {
+      public void changed(ObservableValue<? extends Boolean> ov,
+              final Boolean value, final Boolean newValue)
+      {
+        if (newValue != null && newValue) {
+          printMessage("Your Selection: Audi");
+        }
+      }
+
+
+    });
+// Add a ChangeListener to the CheckBox audiCbx
+    audiCbx.indeterminateProperty().addListener(new ChangeListener<Boolean>()
+    {
+      public void changed(ObservableValue<? extends Boolean> ov,
+              final Boolean value, final Boolean newValue
+      )
+      {
+        if (newValue != null && newValue) {
+          printMessage("Your indeterminate Selection: Audi");
+        }
+      }
+
+
+    });
+    
+// Create the VBox
+    VBox root = new VBox();
+// Add the children to the VBox
+    root.getChildren().addAll(selectionMsg, fordCbx, audiCbx);
+// Set the vertical spacing between children to 20px
+    root.setSpacing(20);
+// Set the Size of the VBox
+    root.setMinSize(350, 250);
+
+    root.setStyle("-fx-padding: 10;"
+            + "-fx-border-style: solid inside;"
+            + "-fx-border-width: 2;"
+            + "-fx-border-insets: 5;"
+            + "-fx-border-radius: 5;"
+            + "-fx-border-color: blue;");
+// Create the Scene
+    Scene scene = new Scene(root);
+// Add the scene to the Stage
+    stage.setScene(scene);
+// Set the title of the Stage
+    stage.setTitle("A CheckBox Example");
+// Display the Stage
+    stage.show();
+  }
+// Helper Method
+
+
+  public void printMessage(String message)
+  {
+// Set the Text of the Label
+    selectionMsg.setText(message);
+  }
+
+
+}
+

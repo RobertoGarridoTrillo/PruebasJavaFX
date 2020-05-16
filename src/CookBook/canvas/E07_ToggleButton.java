@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package CookBook;
+package CookBook.canvas;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -22,9 +16,9 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class E08_RadioButton extends Application
+public class E07_ToggleButton extends Application
 {
-// Create the Selection Label
+// Create the Message Label
 
   Label selectionMsg = new Label("Your selection: None");
 
@@ -37,16 +31,19 @@ public class E08_RadioButton extends Application
   @Override
   public void start(Stage stage)
   {
-// Create the RadioButtons
-    RadioButton fordBtn = new RadioButton("Ford");
-    RadioButton audiBtn = new RadioButton("Audi");
-    RadioButton ferrariBtn = new RadioButton("Ferrari");
-    RadioButton porscheBtn = new RadioButton("Porsche");
+// Create four ToggleButtons
+    ToggleButton fordBtn = new ToggleButton("Ford");
+    ToggleButton audiBtn = new ToggleButton("Audi");
+    ToggleButton ferrariBtn = new ToggleButton("Ferrari");
+    ToggleButton porscheBtn = new ToggleButton("Porsche");
+
 // Create a ToggleGroup
-    ToggleGroup group = new ToggleGroup();
-// Add all RadioButtons to a ToggleGroup
+    final ToggleGroup group = new ToggleGroup();
+
+// Add all ToggleButtons to a ToggleGroup
     group.getToggles().addAll(fordBtn, audiBtn, ferrariBtn, porscheBtn);
-// Add a listener to the ToggleGroup
+
+// Create a ChangeListener for the ToggleGroup
     group.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
     {
       public void changed(ObservableValue<? extends Toggle> ov,
@@ -58,26 +55,25 @@ public class E08_RadioButton extends Application
 
 
     });
-// Select the default car as ferrari
-    ferrariBtn.setSelected(true);
-// Create the Selection Label
-    Label msg = new Label("Select the car you like the most:");
+
+// Create the Label for the Selection
+    Label selectLbl = new Label("Select the car you like:");
 // Create a HBox
     HBox buttonBox = new HBox();
-// Add RadioButtons to an HBox
+// Add ToggleButtons to an HBox
     buttonBox.getChildren().addAll(fordBtn, audiBtn, ferrariBtn, porscheBtn);
 // Set the spacing between children to 10px
     buttonBox.setSpacing(10);
 // Create the VBox
     VBox root = new VBox();
-// Add Labels and RadioButtons to an VBox
-    root.getChildren().addAll(selectionMsg, msg, buttonBox);
+// Add the Labels and HBox to the VBox
+    root.getChildren().addAll(selectionMsg, selectLbl, buttonBox);
 // Set the spacing between children to 10px
     root.setSpacing(10);
 // Set the Size of the VBox
     root.setMinSize(350, 250);
 
-    root.setStyle("-fx-padding: 10;"
+    root.setStyle("-fx-padding: 10;" 
             + "-fx-border-style: solid inside;"
             + "-fx-border-width: 2;"
             + "-fx-border-insets: 5;"
@@ -88,7 +84,7 @@ public class E08_RadioButton extends Application
 // Add the scene to the Stage
     stage.setScene(scene);
 // Set the title of the Stage
-    stage.setTitle("A RadioButton Example");
+    stage.setTitle("A ToggleButton Example");
 // Display the Stage
     stage.show();
   }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox fx:id="vbox" layoutX="10.0" layoutY="10.0" 
+      prefHeight="250.0" prefWidth="300.0" spacing="10" 
+      xmlns="http://javafx.com/javafx/8" 
+      xmlns:fx="http://javafx.com/fxml/1"> 
+
+  <fx:define>
+    <Image url="/main/images/free.png" fx:id="javaImg"/>
+  </fx:define>
+  
+  <children>
+    <fx:include source="/CookBook/fxml/E03/ReusableAndReferencing_Label.fxml" 
+                fx:id="inputLbl"  text="The JavaFX Image:"/>
+    <ImageView fx:id="view">
+      <image>
+        <fx:reference source="javaImg"/>
+      </image>
+    </ImageView>
+  </children>
+</VBox>
+

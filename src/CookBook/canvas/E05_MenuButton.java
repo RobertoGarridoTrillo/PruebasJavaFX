@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package CookBook;
+package CookBook.canvas;
 
 /**
  *
@@ -19,7 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class E05_MenuItem extends Application
+public class E05_MenuButton extends Application
 {
 
   // Create the Message Label
@@ -37,6 +32,7 @@ public class E05_MenuItem extends Application
   {
     // Create the MenuItem ford
     MenuItem ford = new MenuItem("Ford");
+
     // Add EventHandler to the MenuItem
     ford.setOnAction(new EventHandler<ActionEvent>()
     {
@@ -51,6 +47,7 @@ public class E05_MenuItem extends Application
 
     // Create the MenuItem audi
     MenuItem audi = new MenuItem("Audi");
+
     // Add EventHandler to the MenuItem
     audi.setOnAction(new EventHandler<ActionEvent>()
     {
@@ -62,8 +59,10 @@ public class E05_MenuItem extends Application
 
 
     });
+
     // Create the MenuItem ferrari
     MenuItem ferrari = new MenuItem("Ferrari");
+
     // Add EventHandler to the MenuItem
     ferrari.setOnAction(new EventHandler<ActionEvent>()
     {
@@ -78,6 +77,7 @@ public class E05_MenuItem extends Application
 
     // Create the MenuItem porsche
     MenuItem porsche = new MenuItem("Porsche");
+
     // Add EventHandler to the MenuItem
     porsche.setOnAction(new EventHandler<ActionEvent>()
     {
@@ -92,6 +92,7 @@ public class E05_MenuItem extends Application
 
     // Create the MenuButton
     MenuButton cars = new MenuButton("Select");
+    
     // Add menu items to the MenuButton
     cars.getItems().addAll(ford, audi, ferrari, porsche);
 

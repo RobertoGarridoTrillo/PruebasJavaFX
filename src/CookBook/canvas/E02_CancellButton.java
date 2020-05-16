@@ -1,4 +1,4 @@
-package CookBook;
+package CookBook.canvas;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

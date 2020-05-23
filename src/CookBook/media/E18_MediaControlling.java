@@ -45,11 +45,11 @@ public class E18_MediaControlling extends Application
       final Slider cycleSlider = new Slider(1, 5, 1);
       cycleSlider.setMajorTickUnit(1);
       cycleSlider.setShowTickLabels(true);
-
+      // tne maximo volumen is 1
       final Slider volumeSlider = new Slider(0.0, 1.0, 0.5);
       volumeSlider.setMajorTickUnit(0.1);
       volumeSlider.setShowTickLabels(true);
-
+      
       final Slider rateSlider = new Slider(0, 8, 4);
       rateSlider.setMajorTickUnit(1);
       rateSlider.setShowTickLabels(true);

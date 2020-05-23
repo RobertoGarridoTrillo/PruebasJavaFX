@@ -10,40 +10,37 @@ import javafx.stage.Stage;
  *
  * @author Roberto Garrido Trillo
  */
-public class E01_HelloWorld extends Application
-{
+public class E01_HelloWorld extends Application {
 
-  public static void main(String[] args)
-  {
-    Application.launch(args);
-  }
+   public static void main(String[] args) {
+      Application.launch(args);
+   }
 
 
-  @Override
-  public void start(Stage stage)
-  {
+   @Override
+   public void start(Stage stage) {
 // Create the Text
-    Text text = new Text("Hello JavaFX");
+      Text text = new Text("Hello JavaFX");
 // Create the VBox
-    VBox root = new VBox();
+      VBox root = new VBox();
 // Add the Text to the VBox
-    root.getChildren().add(text);
+      root.getChildren().add(text);
 // Set the Size of the VBox
-    root.setMinSize(350, 250);
+      root.setMinSize(350, 250);
 // Create the Scene
-    Scene scene = new Scene(root);
+      Scene scene = new Scene(root);
 // Set the Properties of the Stage
-    stage.setX(100);
-    stage.setY(200);
-    stage.setMinHeight(300);
-    stage.setMinWidth(400);
+      stage.setX(100);
+      stage.setY(200);
+      stage.setMinHeight(300);
+      stage.setMinWidth(400);
 // Add the scene to the Stage
-    stage.setScene(scene);
+      stage.setScene(scene);
 // Set the title of the Stage
-    stage.setTitle("Your first JavaFX Example");
+      stage.setTitle("Your first JavaFX Example");
 // Display the Stage
-    stage.show();
-  }
+      stage.show();
+   }
 
 
 }

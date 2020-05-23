@@ -135,6 +135,7 @@ public class E20_MediaMarking extends Application
 
       });
       
+      
 // Looking at how much time the video has
       player.setOnReady(new Runnable()
       {
@@ -149,6 +150,7 @@ public class E20_MediaMarking extends Application
             }
          }
       });
+      
 
 // Create the HBox
       HBox controlBox = new HBox(5, playButton, stopButton);

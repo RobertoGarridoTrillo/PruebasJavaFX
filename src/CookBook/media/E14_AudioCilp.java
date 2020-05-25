@@ -35,6 +35,7 @@ public class E14_AudioCilp extends Application
 // Create an AudioClip, which loads the audio data synchronously
       final URL resource = getClass().getResource("/main/audio/1.wav");
       audioClip = new AudioClip(resource.toExternalForm());
+                  System.out.println( "resource " + resource);
    }
 
 

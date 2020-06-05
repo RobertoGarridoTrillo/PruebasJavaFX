@@ -1,4 +1,4 @@
-package ListView;
+package control.listview;
 
 import java.util.ArrayList;
 import javafx.application.Application;

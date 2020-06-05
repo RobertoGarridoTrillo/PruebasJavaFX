@@ -2,9 +2,14 @@ package Strings;
 
 //<editor-fold defaultstate="collapsed" desc="import">
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -15,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-//</editor-fold>
 
 
 /**
@@ -27,13 +31,14 @@ public class CompareFile extends Application {
 //<editor-fold defaultstate="collapsed" desc="fields class">
     File firstFile, secondFile;
     String firstPath = "", secondPath = "", firstName = "", secondName;
-    String[] firstWords, secondWords;
+    String[] firstWords, secondWords, thirdWords;
+    List<String> as;
 
     String thisLine;
     Stage stage;
 
-    Button firstButton, secondButton;
-    Label firstLabel, secondLabel;
+    Button firstButton, secondButton, thirdButton;
+    Label firstLabel, secondLabel, thirdLabel;
 
     StringBuilder sb = new StringBuilder();
 //</editor-fold>
@@ -50,13 +55,16 @@ public class CompareFile extends Application {
         firstLabel = new Label("");
         secondButton = new Button("Compare with dictionary");
         secondLabel = new Label("");
-
+        thirdButton = new Button("Update dictionary");
+        thirdLabel = new Label("");
 
         firstButton.setOnMouseClicked(new FirstButton());
         secondButton.setOnMouseClicked(new SecondButton());
+        thirdButton.setOnMouseClicked(new ThirdButton());
 
         root.setMinSize(350, 250);
-        root.getChildren().addAll(firstButton, firstLabel, secondButton, secondLabel);
+        root.getChildren().addAll(firstButton, firstLabel, secondButton,
+                secondLabel, thirdButton, thirdLabel);
 
         // Create the scene
         Scene scene = new Scene(root);
@@ -131,12 +139,8 @@ public class CompareFile extends Application {
                 BufferedReader br = new BufferedReader(new FileReader(firstPath));
                 // Read the file
                 firstWords = countWords(br);
-                // 
-                for (String firstWord : firstWords) {
-                    System.out.println(firstWord);
 
-}
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -148,26 +152,123 @@ public class CompareFile extends Application {
 
         @Override
         public void handle (MouseEvent t) {
-            try (BufferedReader br = new BufferedReader(
-                    new FileReader("../A/src/B/resources/dictionary/dictionary.txt"))) {
-                
-                if (firstPath.equals("")) {
-                    message(Alert.AlertType.ERROR,
-                            "Error message",
-                            "Selecciona primer y segundo archivo archivo",
-                            "Error en " +
-                            "" +
-                            "ThirdButton()");
-                    return;
-                }
 
+            // opwn a bufferedReader to the dictionay
+            try {
+                // open the dictionary
+                BufferedReader br = readDictionary();
+                // Read the dictinoary
                 secondWords = countWords(br);
+                // Compare the dictionary with the file
+                compareDictionary();
 
+            } catch (Exception e) {
+                message(Alert.AlertType.ERROR, "Error", "SecondButton", e.getMessage());
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private class ThirdButton implements EventHandler<MouseEvent> {
+
+        @Override
+        public void handle (MouseEvent t) {
+            
+            if (secondWords==null) return;
+            
+            // Join the dictionary and the new words
+            for (int i = 0; i < secondWords.length; i++) {
+                as.add(secondWords[i]);
+            }
+            // Sorting the Arraylist
+            Collections.sort(as);
+            try {
+                //
+                BufferedWriter bw = new BufferedWriter(
+                        new FileWriter("../A/src/B/resources/dictionary/dictionary.txt"));
+                
+                for (int i = 0; i < as.size(); i++) {
+                    bw.write(as.get(i) + "\n");
+                    bw.flush();
+                }
+                bw.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
 
+
+        }
+    }
+
+    /**
+     * Read the content of the dictionary
+     *
+     * @return @throws IOException
+     */
+    private BufferedReader readDictionary () throws IOException {
+        BufferedReader br = new BufferedReader(
+                new FileReader("../A/src/B/resources/dictionary/dictionary.txt"));
+        // I need the first file open
+        if (firstPath.equals("")) {
+            message(Alert.AlertType.ERROR, "Error message",
+                    "Selecciona primer archivo", "Error en ThirdButton()");
+        }
+        return br;
+    }
+
+    /**
+     * Compare the dictionary with the file. Create a new file with the new words
+     */
+    private void compareDictionary () {
+
+        // fields
+        as = new ArrayList<String>();
+        int j;
+        boolean b = false;
+        int lengthFirstWords = firstWords.length;
+        int lengthSecondWords = secondWords.length;
+
+
+        try {
+            // Doing two loops witd Strings[] and compare one with the other
+            for (int i = 0; i < lengthFirstWords; i++) {
+
+                b = false;
+
+                for (j = 0; j < lengthSecondWords; j++) {
+
+                    if (firstWords[i].equals(secondWords[j])) {
+                        b = true;
+                        break;
+                    }
+                }
+
+                j--;
+                if (!b && i < lengthFirstWords) {
+                    as.add(firstWords[i]);
+                }
+            }
+
+
+            // Cast to String[] / pass data from ArraList to String[]
+            thirdWords = new String[as.size()];
+            thirdWords = as.toArray(thirdWords);
+
+            // Print in the screen the numbers of new labels
+            secondLabel.setText("New words: " + thirdWords.length);
+
+            // if there are some new words save a new file with the new words
+            BufferedWriter bw = new BufferedWriter(
+                    new FileWriter(firstFile.getParent() + "/newWords.txt"));
+            for (String thirdWord : thirdWords) {
+                bw.write(thirdWord + "\n");
+                bw.flush();
+            }
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -197,22 +298,23 @@ public class CompareFile extends Application {
             // setting the Array of strings according to the new line
             words = new String[cont];
 
+            int i = 0;
             // Separate the words 
-            for (int i = 0; i < sb.length(); i++) {
-
+            while (sb.length() > 0) {
+                // Looking for the new line character
                 int newLineIndex = sb.indexOf(newLine);
+                // Extracting the word
+                words[i] = sb.substring(0, newLineIndex);
 
-                words[i] = sb.substring(i, newLineIndex);
-                System.out.println(i + " " + words[i]);
-
-                sb.delete(i, newLineIndex + 1);
-
-                i--;
+                // Deleting the word and starting againg
+                sb = sb.delete(0, newLineIndex + 1);
+                i++;
             }
         } catch (IOException e) {
         }
         return words;
     }
+
 
     /**
      * show a standard emergent message
@@ -222,7 +324,8 @@ public class CompareFile extends Application {
      * @param about The them to expose
      * @param contextText The showed text
      */
-    private void message (Alert.AlertType alertType, String title, String about, String contextText) {
+    private void message (Alert.AlertType alertType, String title,
+            String about, String contextText) {
 
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

@@ -1,4 +1,4 @@
-package ListView;
+package control.listview;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

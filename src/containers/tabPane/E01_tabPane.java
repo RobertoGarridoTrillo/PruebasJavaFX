@@ -1,6 +1,8 @@
 package containers.tabPane;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -23,35 +25,43 @@ public class E01_tabPane extends Application {
         // Create tab
         Tab tabWrite = new Tab("Write");
         Tab tabRead = new Tab("Read");
+        // Add listener to tab
+        tabPane.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<Tab>() {
+                    @Override
+                    public void changed (ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                        System.out.println("Tab Selection changed " + t1.getText());
+                    }
+                }
+                );
 
         // Create Container and items Write
         HBox hboxWrite = new HBox();
         TextArea textAreaWrite = new TextArea();
         textAreaWrite.setPrefWidth(200);
         textAreaWrite.setPrefHeight(10);
-        TextField textWrite = new TextField("Write");
-        hboxWrite.getChildren().addAll(textAreaWrite, textWrite);
+        TextField textFieldWrite = new TextField("Write");
+        hboxWrite.getChildren().addAll(textAreaWrite, textFieldWrite);
 
         // Create Container and items Read
         HBox hboxRead = new HBox();
         TextArea textAreaRead = new TextArea();
         textAreaRead.setPrefWidth(200);
         textAreaRead.setPrefHeight(10);
-        
-        TextField textRead = new TextField("Read");
-        hboxRead.getChildren().addAll(textAreaRead, textRead);
+
+        TextField textFieldRead = new TextField("Read");
+        hboxRead.getChildren().addAll(textAreaRead, textFieldRead);
 
         // bidirectional binding
-        textWrite.textProperty().bind(textRead.textProperty());
+        textFieldWrite.textProperty().bind(textFieldRead.textProperty());
         textAreaRead.textProperty().bindBidirectional(textAreaWrite.textProperty());
-        
+
         tabWrite.setContent(hboxWrite);
         tabRead.setContent(hboxRead);
-        //tabRead.setContent(labelRead);
 
         tabPane.getTabs().addAll(tabWrite, tabRead);
         //tabPane.getTabs().add(tabWrite);
-        //bbtabPane.getTabs().add(tabRead);
+        //tabPane.getTabs().add(tabRead);
 
         Scene scene = new Scene(tabPane);
         stage.setScene(scene);

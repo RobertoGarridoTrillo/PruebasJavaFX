@@ -29,316 +29,339 @@ import javafx.stage.Stage;
 public class CompareFile extends Application {
 
 //<editor-fold defaultstate="collapsed" desc="fields class">
-    File firstFile, secondFile;
-    String firstPath = "", secondPath = "", firstName = "", secondName;
-    String[] firstWords, secondWords, thirdWords;
-    List<String> as;
+   File firstFile, secondFile, thirdFile;
+   String firstPath = "", secondPath = "", thirdPath = "",
+           firstName = "", secondName = "", thirdName = "";
+   String[] firstWords, secondWords, thirdWords;
+   List<String> as;
 
-    String thisLine;
-    Stage stage;
+   String thisLine;
+   Stage stage;
 
-    Button firstButton, secondButton, thirdButton;
-    Label firstLabel, secondLabel, thirdLabel;
+   Button firstButton, secondButton, thirdButton;
+   Label firstLabel, secondLabel, thirdLabel;
 
-    StringBuilder sb = new StringBuilder();
+   StringBuilder sb = new StringBuilder();
 //</editor-fold>
 
-    @Override
-    public void start (Stage stage) {
-        this.stage = stage;
+   @Override
+   public void start (Stage stage) {
+      this.stage = stage;
 
 
-        // Create the root
-        VBox root = new VBox();
+      // Create the root
+      VBox root = new VBox();
 
-        firstButton = new Button("First File");
-        firstLabel = new Label("");
-        secondButton = new Button("Compare with dictionary");
-        secondLabel = new Label("");
-        thirdButton = new Button("Update dictionary");
-        thirdLabel = new Label("");
+      firstButton = new Button("First File");
+      firstLabel = new Label("");
+      secondButton = new Button("Compare with dictionary");
+      secondLabel = new Label("");
+      thirdButton = new Button("Update dictionary");
+      thirdLabel = new Label("");
 
-        firstButton.setOnMouseClicked(new FirstButton());
-        secondButton.setOnMouseClicked(new SecondButton());
-        thirdButton.setOnMouseClicked(new ThirdButton());
+      firstButton.setOnMouseClicked(new FirstButton());
+      secondButton.setOnMouseClicked(new SecondButton());
+      thirdButton.setOnMouseClicked(new ThirdButton());
 
-        root.setMinSize(350, 250);
-        root.getChildren().addAll(firstButton, firstLabel, secondButton,
-                secondLabel, thirdButton, thirdLabel);
+      root.setMinSize(350, 250);
+      root.getChildren().addAll(firstButton, firstLabel, secondButton,
+              secondLabel, thirdButton, thirdLabel);
 
-        // Create the scene
-        Scene scene = new Scene(root);
+      // Create the scene
+      Scene scene = new Scene(root);
 
-        // Create the stage
-        stage.setMinHeight(300);
-        stage.setMinWidth(600);
-        stage.setTitle("MP3 Player");
-        stage.setScene(scene);
-        stage.show();
-    }
+      // Create the stage
+      stage.setMinHeight(300);
+      stage.setMinWidth(600);
+      stage.setTitle("CompareFile");
+      stage.setScene(scene);
+      stage.show();
+   }
 
 
-    /**
-     * Returns a selectrd file
-     *
-     * @param stage
-     *
-     * @return the selected file
-     */
-    public File filechooser (Stage stage) {
+   /**
+    * Returns a selectrd file
+    *
+    * @param stage
+    *
+    * @return the selected file
+    */
+   public File filechooser (Stage stage) {
 
-        File file = null;
-        try {
-            FileChooser fc = new FileChooser();
-            // Set extension filter
-            FileChooser.ExtensionFilter filterTXT =
-                    new FileChooser.ExtensionFilter(
-                            "Text files (*.txt)", "*.txt");
-            FileChooser.ExtensionFilter filterMP3 =
-                    new FileChooser.ExtensionFilter(
-                            "Music files (*.mp3)", "*.mp3");
-            FileChooser.ExtensionFilter filterMP4 =
-                    new FileChooser.ExtensionFilter(
-                            "Video files (*.mp4, *.flv)", "*.mp4", "*.flv");
-            FileChooser.ExtensionFilter filterAll =
-                    new FileChooser.ExtensionFilter(
-                            "All files (*.*)", "*.*");
+      File file = null;
+      try {
+         FileChooser fc = new FileChooser();
+         // Set extension filter
+         FileChooser.ExtensionFilter filterTXT =
+                 new FileChooser.ExtensionFilter(
+                         "Text files (*.txt)", "*.txt");
+         FileChooser.ExtensionFilter filterMP3 =
+                 new FileChooser.ExtensionFilter(
+                         "Music files (*.mp3)", "*.mp3");
+         FileChooser.ExtensionFilter filterMP4 =
+                 new FileChooser.ExtensionFilter(
+                         "Video files (*.mp4, *.flv)", "*.mp4", "*.flv");
+         FileChooser.ExtensionFilter filterAll =
+                 new FileChooser.ExtensionFilter(
+                         "All files (*.*)", "*.*");
 
-            fc.getExtensionFilters().addAll(filterTXT, filterMP3, filterMP4, filterAll);
+         fc.getExtensionFilters().addAll(filterTXT, filterMP3, filterMP4, filterAll);
 
-            /* fc.getExtensionFilters().addAll(
+         /* fc.getExtensionFilters().addAll(
                     new ExtensionFilter("Music files (*.mp3)", "*.mp3"),
                     new ExtensionFilter("All Video files (*.mp4, *.flv)",
                              "*.mp4", "*.flv"),
                     new ExtensionFilter("All files", "*")); */
-            file = fc.showOpenDialog(stage);
+         file = fc.showOpenDialog(stage);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return file;
-    }
+      } catch (Exception ex) {
+         ex.printStackTrace();
+      }
+      return file;
+   }
 
-    private class FirstButton implements EventHandler<MouseEvent> {
+   private class FirstButton implements EventHandler<MouseEvent> {
 
-        @Override
-        public void handle (MouseEvent t) {
-            try {
-                // Select the first file
-                firstFile = filechooser(stage);
-                // Read the path
-                firstPath = firstFile.getAbsolutePath().toString();
-                firstPath = firstPath.replace("\\", "/");
-                int lastBar = firstPath.lastIndexOf("/");
-                // Read the file name
-                firstName = firstPath.substring(lastBar + 1, firstPath.length());
-                // Put the file name in the label
-                firstLabel.setText(firstName);
+      @Override
+      public void handle (MouseEvent t) {
+         try {
+            // Select the first file
+            firstFile = filechooser(stage);
+            // Read the path
+            firstPath = firstFile.getAbsolutePath().toString();
+            firstPath = firstPath.replace("\\", "/");
+            int lastBar = firstPath.lastIndexOf("/");
+            // Read the file name
+            firstName = firstPath.substring(lastBar + 1, firstPath.length());
+            // Put the file name in the label
+            firstLabel.setText(firstName);
 
-                // Open a bufferReader to the file
-                BufferedReader br = new BufferedReader(new FileReader(firstPath));
-                // Read the file
-                firstWords = countWords(br);
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    private class SecondButton implements EventHandler<MouseEvent> {
-
-        @Override
-        public void handle (MouseEvent t) {
-
-            // opwn a bufferedReader to the dictionay
-            try {
-                // open the dictionary
-                BufferedReader br = readDictionary();
-                // Read the dictinoary
-                secondWords = countWords(br);
-                // Compare the dictionary with the file
-                compareDictionary();
-
-            } catch (Exception e) {
-                message(Alert.AlertType.ERROR, "Error", "SecondButton", e.getMessage());
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    private class ThirdButton implements EventHandler<MouseEvent> {
-
-        @Override
-        public void handle (MouseEvent t) {
-            
-            if (secondWords==null) return;
-            
-            // Join the dictionary and the new words
-            for (int i = 0; i < secondWords.length; i++) {
-                as.add(secondWords[i]);
-            }
-            // Sorting the Arraylist
-            Collections.sort(as);
-            try {
-                //
-                BufferedWriter bw = new BufferedWriter(
-                        new FileWriter("../A/src/B/resources/dictionary/dictionary.txt"));
-                
-                for (int i = 0; i < as.size(); i++) {
-                    bw.write(as.get(i) + "\n");
-                    bw.flush();
-                }
-                bw.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            // Open a bufferReader to the file
+            BufferedReader br = new BufferedReader(new FileReader(firstPath));
+            // Read the file
+            firstWords = countWords(br);
 
 
-        }
-    }
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+      }
 
-    /**
-     * Read the content of the dictionary
-     *
-     * @return @throws IOException
-     */
-    private BufferedReader readDictionary () throws IOException {
-        BufferedReader br = new BufferedReader(
-                new FileReader("../A/src/B/resources/dictionary/dictionary.txt"));
-        // I need the first file open
-        if (firstPath.equals("")) {
-            message(Alert.AlertType.ERROR, "Error message",
-                    "Selecciona primer archivo", "Error en ThirdButton()");
-        }
-        return br;
-    }
+   }
 
-    /**
-     * Compare the dictionary with the file. Create a new file with the new words
-     */
-    private void compareDictionary () {
+   private class SecondButton implements EventHandler<MouseEvent> {
 
-        // fields
-        as = new ArrayList<String>();
-        int j;
-        boolean b = false;
-        int lengthFirstWords = firstWords.length;
-        int lengthSecondWords = secondWords.length;
+      @Override
+      public void handle (MouseEvent t) {
+         // Select the  file
+         secondFile = filechooser(stage);
+         // Read the path
+         secondPath = secondFile.getAbsolutePath();
+         secondPath = secondPath.replace("\\", "/");
+         int lastBar = secondPath.lastIndexOf("/");
+         // Read the file name
+         secondName = secondPath.substring(lastBar + 1, secondPath.length());
+         // Put the file name in the label
+         secondLabel.setText(secondName);
 
+         // opwn a bufferedReader to the dictionay
+         try {
+            // open the dictionary
+            BufferedReader br = readDictionary(secondFile);
+            // Read the dictinoary
+            secondWords = countWords(br);
+            // Compare the dictionary with the file
+            compareDictionary();
 
-        try {
-            // Doing two loops witd Strings[] and compare one with the other
-            for (int i = 0; i < lengthFirstWords; i++) {
+         } catch (Exception e) {
+            message(Alert.AlertType.ERROR, "Error", "SecondButton", e.getMessage());
+            e.printStackTrace();
+         }
 
-                b = false;
+      }
+   }
 
-                for (j = 0; j < lengthSecondWords; j++) {
+   private class ThirdButton implements EventHandler<MouseEvent> {
 
-                    if (firstWords[i].equals(secondWords[j])) {
-                        b = true;
-                        break;
-                    }
-                }
+      @Override
+      public void handle (MouseEvent t) {
 
-                j--;
-                if (!b && i < lengthFirstWords) {
-                    as.add(firstWords[i]);
-                }
-            }
+         if (secondWords == null) {
+            return;
+         }
+         
+         thirdFile = filechooser(stage);
+         // Read the path
+         thirdPath = thirdFile.getAbsolutePath().toString();
+         thirdPath = thirdPath.replace("\\", "/");
+         int lastBar = thirdPath.lastIndexOf("/");
+         // Read the file name
+         thirdName = thirdPath.substring(lastBar + 1, thirdPath.length());
+         // Put the file name in the label
+         thirdLabel.setText(thirdName);
 
-
-            // Cast to String[] / pass data from ArraList to String[]
-            thirdWords = new String[as.size()];
-            thirdWords = as.toArray(thirdWords);
-
-            // Print in the screen the numbers of new labels
-            secondLabel.setText("New words: " + thirdWords.length);
-
-            // if there are some new words save a new file with the new words
+         // Join the dictionary and the new words
+         for (int i = 0; i < secondWords.length; i++) {
+            as.add(secondWords[i]);
+         }
+         // Sorting the Arraylist
+         Collections.sort(as);
+         try {
+            //
             BufferedWriter bw = new BufferedWriter(
-                    new FileWriter(firstFile.getParent() + "/newWords.txt"));
-            for (String thirdWord : thirdWords) {
-                bw.write(thirdWord + "\n");
-                bw.flush();
+                    new FileWriter(thirdFile));
+
+            for (int i = 0; i < as.size(); i++) {
+               bw.write(as.get(i) + "\n");
+               bw.flush();
             }
             bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
 
-    /**
-     * Read the words of a file
-     */
-    private String[] countWords (BufferedReader br) {
 
-        String[] words = null;
-        String newLine = String.valueOf(Character.toChars(10));
+      }
+   }
 
-        try {
+   /**
+    * Read the content of the dictionary
+    *
+    * @return @throws IOException
+    */
+   private BufferedReader readDictionary (File file) throws IOException {
+      BufferedReader br = new BufferedReader(
+              new FileReader(file));
+      // I need the first file open
+      if (firstPath.equals("")) {
+         message(Alert.AlertType.ERROR, "Error message",
+                 "Selecciona primer archivo", "Error en ThirdButton()");
+      }
+      return br;
+   }
 
-            // Extract the words in a StringBuilder
-            while ((thisLine = br.readLine()) != null) {
-                sb.append(thisLine).append("\n");
+   /**
+    * Compare the dictionary with the file. Create a new file with the new words
+    */
+   private void compareDictionary () {
+
+      // fields
+      as = new ArrayList<String>();
+      int j;
+      boolean b = false;
+      int lengthFirstWords = firstWords.length;
+      int lengthSecondWords = secondWords.length;
+
+
+      try {
+         // Doing two loops witd Strings[] and compare one with the other
+         for (int i = 0; i < lengthFirstWords; i++) {
+
+            b = false;
+
+            for (j = 0; j < lengthSecondWords; j++) {
+
+               if (firstWords[i].equals(secondWords[j])) {
+                  b = true;
+                  break;
+               }
             }
 
-            // Count the number of words
-            int cont = 0;
-
-            for (int i = 0; i < sb.length(); i++) {
-                if (sb.codePointAt(i) == 10) {
-                    cont++;
-                }
+            j--;
+            if (!b && i < lengthFirstWords) {
+               as.add(firstWords[i]);
             }
+         }
 
-            // setting the Array of strings according to the new line
-            words = new String[cont];
 
-            int i = 0;
-            // Separate the words 
-            while (sb.length() > 0) {
-                // Looking for the new line character
-                int newLineIndex = sb.indexOf(newLine);
-                // Extracting the word
-                words[i] = sb.substring(0, newLineIndex);
+         // Cast to String[] / pass data from ArraList to String[]
+         thirdWords = new String[as.size()];
+         thirdWords = as.toArray(thirdWords);
 
-                // Deleting the word and starting againg
-                sb = sb.delete(0, newLineIndex + 1);
-                i++;
+         // Print in the screen the numbers of new labels
+         secondLabel.setText("New words: " + thirdWords.length);
+
+         // if there are some new words save a new file with the new words
+         BufferedWriter bw = new BufferedWriter(
+                 new FileWriter(firstFile.getParent() + "/newWords.txt"));
+         for (String thirdWord : thirdWords) {
+            bw.write(thirdWord + "\n");
+            bw.flush();
+         }
+         bw.close();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   /**
+    * Read the words of a file
+    */
+   private String[] countWords (BufferedReader br) {
+
+      String[] words = null;
+      String newLine = String.valueOf(Character.toChars(10));
+
+      try {
+
+         // Extract the words in a StringBuilder
+         while ((thisLine = br.readLine()) != null) {
+            sb.append(thisLine).append("\n");
+         }
+
+         // Count the number of words
+         int cont = 0;
+
+         for (int i = 0; i < sb.length(); i++) {
+            if (sb.codePointAt(i) == 10) {
+               cont++;
             }
-        } catch (IOException e) {
-        }
-        return words;
-    }
+         }
+
+         // setting the Array of strings according to the new line
+         words = new String[cont];
+
+         int i = 0;
+         // Separate the words 
+         while (sb.length() > 0) {
+            // Looking for the new line character
+            int newLineIndex = sb.indexOf(newLine);
+            // Extracting the word
+            words[i] = sb.substring(0, newLineIndex);
+
+            // Deleting the word and starting againg
+            sb = sb.delete(0, newLineIndex + 1);
+            i++;
+         }
+      } catch (IOException e) {
+      }
+      return words;
+   }
 
 
-    /**
-     * show a standard emergent message
-     *
-     * @param alertType alertType.CONFIRMATION, ERROR, INFORMATION, NONE, WARNING
-     * @param title The title of the windows
-     * @param about The them to expose
-     * @param contextText The showed text
-     */
-    private void message (Alert.AlertType alertType, String title,
-            String about, String contextText) {
+   /**
+    * show a standard emergent message
+    *
+    * @param alertType alertType.CONFIRMATION, ERROR, INFORMATION, NONE, WARNING
+    * @param title The title of the windows
+    * @param about The them to expose
+    * @param contextText The showed text
+    */
+   private void message (Alert.AlertType alertType, String title,
+           String about, String contextText) {
 
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(about);
-        alert.setContentText(contextText);
+      Alert alert = new Alert(alertType);
+      alert.setTitle(title);
+      alert.setHeaderText(about);
+      alert.setContentText(contextText);
 
-        alert.showAndWait();
-    }
+      alert.showAndWait();
+   }
 
-    public static void main (String[] args) {
+   public static void main (String[] args) {
 
-        Application.launch(args);
+      Application.launch(args);
 
-    }
+   }
 
 }
